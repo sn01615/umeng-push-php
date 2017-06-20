@@ -1,0 +1,37 @@
+{
+  "name": "sn01615/umeng-php",
+  "description": "umeng push move to composer",
+  "type": "library",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "YangLong",
+      "email": "168119405@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Umeng\\": "src"
+    }
+  },
+  "support": {
+    "source": "https://github.com/sn01615/umeng",
+    "issues": "https://github.com/sn01615/umeng/issues",
+    "email": "168119405@qq.com"
+  },
+  "keywords": [
+    "umeng",
+    "umeng-push"
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:sn01615/umeng.git",
+      "name": "git"
+    }
+  ],
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*"
+  }
+}
