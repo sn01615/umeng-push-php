@@ -1,5 +1,5 @@
 <?php
-require_once('UmengNotification.php');
+namespace Umeng\UmengPush;
 
 abstract class IOSNotification extends UmengNotification {
 	// The array for payload, please see API doc for more information
@@ -25,7 +25,7 @@ abstract class IOSNotification extends UmengNotification {
 	// Set key/value for $data array, for the keys which can be set please see $DATA_KEYS, $PAYLOAD_KEYS, $BODY_KEYS, $POLICY_KEYS
 	function setPredefinedKeyValue($key, $value) {
 		if (!is_string($key))
-			throw new Exception("key should be a string!");
+			throw new \Exception("key should be a string!");
 
 		if (in_array($key, $this->DATA_KEYS)) {
 			$this->data[$key] = $value;
@@ -35,9 +35,9 @@ abstract class IOSNotification extends UmengNotification {
 			$this->data["policy"][$key] = $value;
 		} else {
 			if ($key == "payload" || $key == "policy" || $key == "aps") {
-				throw new Exception("You don't need to set value for ${key} , just set values for the sub keys in it.");
+				throw new \Exception("You don't need to set value for ${key} , just set values for the sub keys in it.");
 			} else {
-				throw new Exception("Unknown key: ${key}");
+				throw new \Exception("Unknown key: ${key}");
 			}
 		}
 	}
@@ -45,7 +45,7 @@ abstract class IOSNotification extends UmengNotification {
 	// Set extra key/value for Android notification
 	function setCustomizedField($key, $value) {
 		if (!is_string($key))
-			throw new Exception("key should be a string!");
+			throw new \Exception("key should be a string!");
 		$this->data["payload"][$key] = $value;
 	}
 }

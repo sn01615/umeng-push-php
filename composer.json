@@ -1,0 +1,19 @@
+{
+	"name" : "sn01615/umeng",
+	"description" : "umeng push move to composer",
+	"type" : "library",
+	"license" : "GPL",
+	"authors" : [{
+			"name" : "YangLong",
+			"email" : "168119405@qq.com"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Umeng\\" : "src"
+		}
+	},
+	"support" : {
+		"source" : "https://github.com/sn01615/umeng"
+	}
+}

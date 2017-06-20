@@ -1,5 +1,7 @@
 <?php
-require_once(dirname(__FILE__) . '/../AndroidNotification.php');
+namespace Umeng\UmengPush\android;
+
+use Umeng\UmengPush\AndroidNotification;
 
 class AndroidCustomizedcast extends AndroidNotification {
 
@@ -12,18 +14,18 @@ class AndroidCustomizedcast extends AndroidNotification {
 	function isComplete() {
 		parent::isComplete();
 		if (!array_key_exists("alias", $this->data) && !array_key_exists("file_id", $this->data))
-			throw new Exception("You need to set alias or upload file for customizedcast!");
+			throw new \Exception("You need to set alias or upload file for customizedcast!");
 	}
 
 	// Upload file with device_tokens or alias to Umeng
 	//return file_id if SUCCESS, else throw Exception with details.
 	function uploadContents($content) {
 		if ($this->data["appkey"] == NULL)
-			throw new Exception("appkey should not be NULL!");
+			throw new \Exception("appkey should not be NULL!");
 		if ($this->data["timestamp"] == NULL)
-			throw new Exception("timestamp should not be NULL!");
+			throw new \Exception("timestamp should not be NULL!");
 		if (!is_string($content))
-			throw new Exception("content should be a string!");
+			throw new \Exception("content should be a string!");
 
 		$post = array("appkey"           => $this->data["appkey"],
 					  "timestamp"        => $this->data["timestamp"],
@@ -47,12 +49,12 @@ class AndroidCustomizedcast extends AndroidNotification {
         curl_close($ch);
         print($result . "\r\n");
         if ($httpCode == "0") //time out
-        	throw new Exception("Curl error number:" . $curlErrNo . " , Curl error details:" . $curlErr . "\r\n");
+        	throw new \Exception("Curl error number:" . $curlErrNo . " , Curl error details:" . $curlErr . "\r\n");
         else if ($httpCode != "200") //we did send the notifition out and got a non-200 response
-        	throw new Exception("http code:" . $httpCode . " details:" . $result . "\r\n");
+        	throw new \Exception("http code:" . $httpCode . " details:" . $result . "\r\n");
         $returnData = json_decode($result, TRUE);
         if ($returnData["ret"] == "FAIL")
-        	throw new Exception("Failed to upload file, details:" . $result . "\r\n");
+        	throw new \Exception("Failed to upload file, details:" . $result . "\r\n");
         else
         	$this->data["file_id"] = $returnData["data"]["file_id"];
 	}

@@ -1,4 +1,5 @@
 <?php
+namespace Umeng\UmengPush;
 
 abstract class UmengNotification {
 	// The host
@@ -48,7 +49,7 @@ abstract class UmengNotification {
 	//return TRUE if it's complete, otherwise throw exception with details
 	function isComplete() {
 		if (is_null($this->appMasterSecret))
-			throw new Exception("Please set your app master secret for generating the signature!");
+			throw new \Exception("Please set your app master secret for generating the signature!");
 		$this->checkArrayValues($this->data);
 		return TRUE;
 	}
@@ -56,7 +57,7 @@ abstract class UmengNotification {
 	private function checkArrayValues($arr) {
 		foreach ($arr as $key => $value) {
 			if (is_null($value))
-				throw new Exception($key . " is NULL!");
+				throw new \Exception($key . " is NULL!");
 			else if (is_array($value)) {
 				$this->checkArrayValues($value);
 			}
@@ -90,10 +91,10 @@ abstract class UmengNotification {
         print($result . "\r\n");
         if ($httpCode == "0") {
           	 // Time out
-           	throw new Exception("Curl error number:" . $curlErrNo . " , Curl error details:" . $curlErr . "\r\n");
+           	throw new \Exception("Curl error number:" . $curlErrNo . " , Curl error details:" . $curlErr . "\r\n");
         } else if ($httpCode != "200") {
            	// We did send the notifition out and got a non-200 response
-           	throw new Exception("Http code:" . $httpCode .  " details:" . $result . "\r\n");
+           	throw new \Exception("Http code:" . $httpCode .  " details:" . $result . "\r\n");
         } else {
            	return $result;
         }

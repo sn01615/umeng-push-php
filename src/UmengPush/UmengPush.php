@@ -1,16 +1,18 @@
 <?php
-require_once(dirname(__FILE__) . '/' . 'notification/android/AndroidBroadcast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/android/AndroidFilecast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/android/AndroidGroupcast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/android/AndroidUnicast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/android/AndroidCustomizedcast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/ios/IOSBroadcast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/ios/IOSFilecast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/ios/IOSGroupcast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/ios/IOSUnicast.php');
-require_once(dirname(__FILE__) . '/' . 'notification/ios/IOSCustomizedcast.php');
+namespace Umeng;
 
-class Demo {
+use Umeng\UmengPush\android\AndroidBroadcast;
+use Umeng\UmengPush\android\AndroidFilecast;
+use Umeng\UmengPush\android\AndroidGroupcast;
+use Umeng\UmengPush\android\AndroidUnicast;
+use Umeng\UmengPush\android\AndroidCustomizedcast;
+use Umeng\UmengPush\ios\IOSBroadcast;
+use Umeng\UmengPush\ios\IOSFilecast;
+use Umeng\UmengPush\ios\IOSGroupcast;
+use Umeng\UmengPush\ios\IOSUnicast;
+use Umeng\UmengPush\ios\IOSCustomizedcast;
+
+class UmengPush {
 	protected $appkey           = NULL; 
 	protected $appMasterSecret     = NULL;
 	protected $timestamp        = NULL;
@@ -29,7 +31,7 @@ class Demo {
 			$brocast->setPredefinedKeyValue("appkey",           $this->appkey);
 			$brocast->setPredefinedKeyValue("timestamp",        $this->timestamp);
 			$brocast->setPredefinedKeyValue("ticker",           "Android broadcast ticker");
-			$brocast->setPredefinedKeyValue("title",            "中文的title");
+			$brocast->setPredefinedKeyValue("title",            "涓枃鐨則itle");
 			$brocast->setPredefinedKeyValue("text",             "Android broadcast text");
 			$brocast->setPredefinedKeyValue("after_open",       "go_app");
 			// Set 'production_mode' to 'false' if it's a test device. 
@@ -40,7 +42,7 @@ class Demo {
 			print("Sending broadcast notification, please wait...\r\n");
 			$brocast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -65,7 +67,7 @@ class Demo {
 			print("Sending unicast notification, please wait...\r\n");
 			$unicast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -86,7 +88,7 @@ class Demo {
 			print("Sending filecast notification, please wait...\r\n");
 			$filecast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -133,7 +135,7 @@ class Demo {
 			print("Sending groupcast notification, please wait...\r\n");
 			$groupcast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -157,7 +159,7 @@ class Demo {
 			print("Sending customizedcast notification, please wait...\r\n");
 			$customizedcast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -180,7 +182,7 @@ class Demo {
 			print("Sending customizedcast notification, please wait...\r\n");
 			$customizedcast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -192,7 +194,7 @@ class Demo {
 			$brocast->setPredefinedKeyValue("appkey",           $this->appkey);
 			$brocast->setPredefinedKeyValue("timestamp",        $this->timestamp);
 
-			$brocast->setPredefinedKeyValue("alert", "IOS 广播测试");
+			$brocast->setPredefinedKeyValue("alert", "IOS 骞挎挱娴嬭瘯");
 			$brocast->setPredefinedKeyValue("badge", 0);
 			$brocast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
@@ -202,7 +204,7 @@ class Demo {
 			print("Sending broadcast notification, please wait...\r\n");
 			$brocast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -215,7 +217,7 @@ class Demo {
 			$unicast->setPredefinedKeyValue("timestamp",        $this->timestamp);
 			// Set your device tokens here
 			$unicast->setPredefinedKeyValue("device_tokens",    "xx"); 
-			$unicast->setPredefinedKeyValue("alert", "IOS 单播测试");
+			$unicast->setPredefinedKeyValue("alert", "IOS 鍗曟挱娴嬭瘯");
 			$unicast->setPredefinedKeyValue("badge", 0);
 			$unicast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
@@ -225,7 +227,7 @@ class Demo {
 			print("Sending unicast notification, please wait...\r\n");
 			$unicast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -237,7 +239,7 @@ class Demo {
 			$filecast->setPredefinedKeyValue("appkey",           $this->appkey);
 			$filecast->setPredefinedKeyValue("timestamp",        $this->timestamp);
 
-			$filecast->setPredefinedKeyValue("alert", "IOS 文件播测试");
+			$filecast->setPredefinedKeyValue("alert", "IOS 鏂囦欢鎾祴璇�");
 			$filecast->setPredefinedKeyValue("badge", 0);
 			$filecast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
@@ -248,7 +250,7 @@ class Demo {
 			print("Sending filecast notification, please wait...\r\n");
 			$filecast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -281,7 +283,7 @@ class Demo {
 			$groupcast->setPredefinedKeyValue("timestamp",        $this->timestamp);
 			// Set the filter condition
 			$groupcast->setPredefinedKeyValue("filter",           $filter);
-			$groupcast->setPredefinedKeyValue("alert", "IOS 组播测试");
+			$groupcast->setPredefinedKeyValue("alert", "IOS 缁勬挱娴嬭瘯");
 			$groupcast->setPredefinedKeyValue("badge", 0);
 			$groupcast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
@@ -289,7 +291,7 @@ class Demo {
 			print("Sending groupcast notification, please wait...\r\n");
 			$groupcast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
@@ -307,7 +309,7 @@ class Demo {
 			$customizedcast->setPredefinedKeyValue("alias", "xx");
 			// Set your alias_type here
 			$customizedcast->setPredefinedKeyValue("alias_type", "xx");
-			$customizedcast->setPredefinedKeyValue("alert", "IOS 个性化测试");
+			$customizedcast->setPredefinedKeyValue("alert", "IOS 涓�у寲娴嬭瘯");
 			$customizedcast->setPredefinedKeyValue("badge", 0);
 			$customizedcast->setPredefinedKeyValue("sound", "chime");
 			// Set 'production_mode' to 'true' if your app is under production mode
@@ -315,15 +317,15 @@ class Demo {
 			print("Sending customizedcast notification, please wait...\r\n");
 			$customizedcast->send();
 			print("Sent SUCCESS\r\n");
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			print("Caught exception: " . $e->getMessage());
 		}
 	}
 }
 
 // Set your appkey and master secret here
-$demo = new Demo("your appkey", "your app master secret");
-$demo->sendAndroidUnicast();
+// $demo = new UmengPush("your appkey", "your app master secret");
+// $demo->sendAndroidUnicast();
 /* these methods are all available, just fill in some fields and do the test
  * $demo->sendAndroidBroadcast();
  * $demo->sendAndroidFilecast();
