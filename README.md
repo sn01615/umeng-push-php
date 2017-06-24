@@ -1,5 +1,37 @@
-# 官方SDK下载下来加了命名空间
+基于Upush的服务端官方示例文件修改
+-
+- 增加命名空间
+- 推送到packagist
 
+安装：
+```
+composer require sn01615/umeng
+```
+
+单播
+
+```php
+use Umeng\UmengPush;
+
+$key = "****";
+$secret = "*****";
+$push = new UmengPush($key, $secret);
+$values = [
+    'ticker' => '1', // require 通知栏提示文字
+    'title' => '2', // require 通知标题
+    'text' => '3', // require 通知文字描述
+    'after_open' => 'go_app' // require 值可以为:
+    // "go_app": open app
+    // "go_url": 跳转到URL
+    // "go_activity": open activity
+    // "go_custom": 用户自定义内容。
+];
+echo $push->sendAndroidUnicast($values, [], 'token');
+# result: {"ret":"SUCCESS","data":{"msg_id":"uu77312149835056871500"}}
+```
+
+##### 原README
+```
 1.What's this?
 This is a demo code for php developers who choose Umeng to push notifications to their apps. For more infomation about Umeng, please refer to http://www.umeng.com/.
 
@@ -13,3 +45,4 @@ We write the code following the standard of PHP 5.0+, so PHP version under 5.0 s
 
 Notes:
 We build this project on Mac with Sublime Text 2, so sometimes it doesn't look beautiful when switching to other platforms such as Ubuntu. But it doesn't hurt much except the beauty. Forgive us for this, and we are sure to do better.
+```
