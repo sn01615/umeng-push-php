@@ -4,7 +4,7 @@
 - 推送到packagist
 
 安装：
-```
+```bash
 composer require sn01615/umeng
 ```
 
@@ -26,7 +26,7 @@ $values = [
     // "go_activity": open activity
     // "go_custom": 用户自定义内容。
 ];
-echo $push->sendAndroidUnicast($values, [], 'token');
+echo $push->sendAndroidUnicast($values, [], 'device token');
 # result: {"ret":"SUCCESS","data":{"msg_id":"uu77312149835056871500"}}
 ```
 
