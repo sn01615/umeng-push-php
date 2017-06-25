@@ -21,5 +21,11 @@
 	"keywords" : [
 		"umeng",
 		"umeng-push"
+	],
+	"repositories" : [{
+			"type" : "git",
+			"url" : "git@github.com:sn01615/umeng.git",
+			"name" : "git"
+		}
 	]
 }
