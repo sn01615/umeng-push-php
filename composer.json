@@ -16,8 +16,7 @@
 	"support" : {
 		"source" : "https://github.com/sn01615/umeng",
 		"issues" : "https://github.com/sn01615/umeng/issues",
-		"email" : "168119405@qq.com",
-		"irc" : "https://shang.qq.com/wpa/qunwpa?idkey=20dc68c110fd79b88d6a69288f5cef0626eed68fb8a12b4d9aca135c51558d0b"
+		"email" : "168119405@qq.com"
 	},
 	"keywords" : [
 		"umeng",
