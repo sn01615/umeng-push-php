@@ -2,7 +2,7 @@
 	"name" : "sn01615/umeng",
 	"description" : "umeng push move to composer",
 	"type" : "library",
-	"license" : "GPL",
+	"license" : "GPL-3.0",
 	"authors" : [{
 			"name" : "YangLong",
 			"email" : "168119405@qq.com"
