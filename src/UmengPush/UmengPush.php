@@ -34,7 +34,7 @@ class UmengPush
 
     function sendAndroidBroadcast(array $values, array $extra)
     {
-        $values = [
+        $_values = [
             'ticker' => '', // 必填 通知栏提示文字
             'title' => '', // 必填 通知标题
             'text' => '', // 必填 通知文字描述
@@ -45,12 +45,13 @@ class UmengPush
                                          // "go_custom": 用户自定义内容。
         ];
         $extra = [];
+        $_values = array_merge($_values, $values);
         try {
             $brocast = new AndroidBroadcast();
             $brocast->setAppMasterSecret($this->appMasterSecret);
             $brocast->setPredefinedKeyValue("appkey", $this->appkey);
             $brocast->setPredefinedKeyValue("timestamp", $this->timestamp);
-            foreach ($values as $key => $value) {
+            foreach ($_values as $key => $value) {
                 $brocast->setPredefinedKeyValue($key, $value);
             }
             // Set 'production_mode' to 'false' if it's a test device.
