@@ -1,5 +1,5 @@
 {
-	"name" : "sn01615/umeng",
+	"name" : "sn01615/umeng-php",
 	"description" : "umeng push move to composer",
 	"type" : "library",
 	"license" : "GPL-3.0",
