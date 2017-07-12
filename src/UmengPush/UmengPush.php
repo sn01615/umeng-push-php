@@ -69,7 +69,7 @@ class UmengPush
         }
     }
 
-    function sendAndroidUnicast(array $values, array $extra, $device_tokens)
+    public function sendAndroidUnicast(array $values, array $extra, $device_tokens)
     {
         $_values = [
             'device_tokens' => $device_tokens, // 必填, 表示指定的单个设备
@@ -101,7 +101,7 @@ class UmengPush
                 $unicast->setExtraField($key, $value);
             }
             // print("Sending unicast notification, please wait...\r\n");
-            $unicast->send();
+            return $unicast->send();
             // print("Sent SUCCESS\r\n");
         } catch (\Exception $e) {
             return "Caught exception: " . $e->getMessage();
@@ -293,27 +293,35 @@ class UmengPush
         }
     }
 
-    function sendIOSUnicast()
+    public function sendIOSUnicast(array $values, array $extra, $device_tokens)
     {
+        $_values = [
+            'alert' => ''
+        ];
+        $_values = array_merge($_values, $values);
         try {
             $unicast = new IOSUnicast();
             $unicast->setAppMasterSecret($this->appMasterSecret);
             $unicast->setPredefinedKeyValue("appkey", $this->appkey);
             $unicast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set your device tokens here
-            $unicast->setPredefinedKeyValue("device_tokens", "xx");
-            $unicast->setPredefinedKeyValue("alert", "IOS 鍗曟挱娴嬭瘯");
+            $unicast->setPredefinedKeyValue("device_tokens", $device_tokens);
+            foreach ($_values as $key => $value) {
+                $unicast->setPredefinedKeyValue($key, $value);
+            }
             $unicast->setPredefinedKeyValue("badge", 0);
             $unicast->setPredefinedKeyValue("sound", "chime");
             // Set 'production_mode' to 'true' if your app is under production mode
-            $unicast->setPredefinedKeyValue("production_mode", "false");
+            $unicast->setPredefinedKeyValue("production_mode", $this->production_mode);
             // Set customized fields
-            $unicast->setCustomizedField("test", "helloworld");
-            print("Sending unicast notification, please wait...\r\n");
-            $unicast->send();
-            print("Sent SUCCESS\r\n");
+            foreach ($extra as $key => $value) {
+                $unicast->setCustomizedField($key, $value);
+            }
+            // print("Sending unicast notification, please wait...\r\n");
+            return $unicast->send();
+            // print("Sent SUCCESS\r\n");
         } catch (\Exception $e) {
-            print("Caught exception: " . $e->getMessage());
+            return "Caught exception: " . $e->getMessage();
         }
     }
 
