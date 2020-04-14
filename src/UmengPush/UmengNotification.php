@@ -75,7 +75,7 @@ abstract class UmengNotification
 
     abstract function setPredefinedKeyValue($key, $value);
 
-    function send($getUrlAndBody = null)
+    function send($getUrlAndBody = false)
     {
         // check the fields to make sure that they are not NULL
         $this->isComplete();

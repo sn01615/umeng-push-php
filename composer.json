@@ -2,7 +2,7 @@
   "name": "sn01615/umeng-php",
   "description": "umeng push move to composer",
   "type": "library",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "authors": [
     {
       "name": "YangLong",

@@ -17,7 +17,7 @@ use Umeng\UmengPush\ios\IOSUnicast;
 class UmengPush
 {
 
-    protected $appkey = NULL;
+    protected $appKey = NULL;
 
     protected $appMasterSecret = NULL;
 
@@ -27,9 +27,17 @@ class UmengPush
 
     private $production_mode = 'true';
 
+    private $getUrlAndBody = false;
+
+    /**
+     * UmengPush constructor.
+     * https://developer.umeng.com/docs/67966/detail/68343
+     * @param string $key AppKey 在Web后台的App应用信息页面获取
+     * @param string $secret App Master Secret 在Web后台的App应用信息页面获取
+     */
     function __construct($key, $secret)
     {
-        $this->appkey = $key;
+        $this->appKey = $key;
         $this->appMasterSecret = $secret;
         $this->timestamp = strval(time());
     }
@@ -51,7 +59,7 @@ class UmengPush
         try {
             $brocast = new AndroidBroadcast();
             $brocast->setAppMasterSecret($this->appMasterSecret);
-            $brocast->setPredefinedKeyValue("appkey", $this->appkey);
+            $brocast->setPredefinedKeyValue("appkey", $this->appKey);
             $brocast->setPredefinedKeyValue("timestamp", $this->timestamp);
             foreach ($_values as $key => $value) {
                 $brocast->setPredefinedKeyValue($key, $value);
@@ -111,7 +119,7 @@ class UmengPush
         try {
             $unicast = new AndroidUnicast();
             $unicast->setAppMasterSecret($this->appMasterSecret);
-            $unicast->setPredefinedKeyValue("appkey", $this->appkey);
+            $unicast->setPredefinedKeyValue("appkey", $this->appKey);
             $unicast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set your device tokens here
             foreach ($_values as $key => $value) {
@@ -149,7 +157,7 @@ class UmengPush
         try {
             $filecast = new AndroidFilecast();
             $filecast->setAppMasterSecret($this->appMasterSecret);
-            $filecast->setPredefinedKeyValue("appkey", $this->appkey);
+            $filecast->setPredefinedKeyValue("appkey", $this->appKey);
             $filecast->setPredefinedKeyValue("timestamp", $this->timestamp);
             foreach ($values as $key => $value) {
                 $filecast->setPredefinedKeyValue($key, $value);
@@ -197,7 +205,7 @@ class UmengPush
         try {
             $groupcast = new AndroidGroupcast();
             $groupcast->setAppMasterSecret($this->appMasterSecret);
-            $groupcast->setPredefinedKeyValue("appkey", $this->appkey);
+            $groupcast->setPredefinedKeyValue("appkey", $this->appKey);
             $groupcast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set the filter condition
             $groupcast->setPredefinedKeyValue("filter", $filter);
@@ -218,6 +226,13 @@ class UmengPush
         }
     }
 
+    /**
+     * @param array $values
+     * @param array $extra
+     * @param string $alias 别名，如:用户ID
+     * @param string $aliasType 别名类型，前端自定义设置，如:UID
+     * @return array|bool|string
+     */
     public function sendAndroidCustomizedcast(array $values, array $extra, $alias, $aliasType)
     {
         $values = array_merge([
@@ -235,7 +250,7 @@ class UmengPush
         try {
             $customizedcast = new AndroidCustomizedcast();
             $customizedcast->setAppMasterSecret($this->appMasterSecret);
-            $customizedcast->setPredefinedKeyValue("appkey", $this->appkey);
+            $customizedcast->setPredefinedKeyValue("appkey", $this->appKey);
             $customizedcast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set your alias here, and use comma to split them if there are multiple alias.
             // And if you have many alias, you can also upload a file containing these alias, then
@@ -250,11 +265,29 @@ class UmengPush
                 $customizedcast->setExtraField($key, $value);
             }
             // print("Sending customizedcast notification, please wait...\r\n");
-            return $customizedcast->send();
+            return $customizedcast->send($this->getGetUrlAndBody());
             // print("Sent SUCCESS\r\n");
         } catch (Exception $e) {
             return "Caught exception: " . $e->getMessage();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function getGetUrlAndBody()
+    {
+        return $this->getUrlAndBody;
+    }
+
+    /**
+     * @param bool $getUrlAndBody
+     * @return UmengPush
+     */
+    public function setGetUrlAndBody($getUrlAndBody)
+    {
+        $this->getUrlAndBody = $getUrlAndBody;
+        return $this;
     }
 
     function sendAndroidCustomizedcastFileId(array $values, array $extra, array $tokens)
@@ -274,7 +307,7 @@ class UmengPush
         try {
             $customizedcast = new AndroidCustomizedcast();
             $customizedcast->setAppMasterSecret($this->appMasterSecret);
-            $customizedcast->setPredefinedKeyValue("appkey", $this->appkey);
+            $customizedcast->setPredefinedKeyValue("appkey", $this->appKey);
             $customizedcast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // if you have many alias, you can also upload a file containing these alias, then
             // use file_id to send customized notification.
@@ -300,7 +333,7 @@ class UmengPush
         try {
             $brocast = new IOSBroadcast();
             $brocast->setAppMasterSecret($this->appMasterSecret);
-            $brocast->setPredefinedKeyValue("appkey", $this->appkey);
+            $brocast->setPredefinedKeyValue("appkey", $this->appKey);
             $brocast->setPredefinedKeyValue("timestamp", $this->timestamp);
 
             $brocast->setPredefinedKeyValue("alert", "IOS 骞挎挱娴嬭瘯");
@@ -327,7 +360,7 @@ class UmengPush
         try {
             $unicast = new IOSUnicast();
             $unicast->setAppMasterSecret($this->appMasterSecret);
-            $unicast->setPredefinedKeyValue("appkey", $this->appkey);
+            $unicast->setPredefinedKeyValue("appkey", $this->appKey);
             $unicast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set your device tokens here
             $unicast->setPredefinedKeyValue("device_tokens", $device_tokens);
@@ -355,7 +388,7 @@ class UmengPush
         try {
             $filecast = new IOSFilecast();
             $filecast->setAppMasterSecret($this->appMasterSecret);
-            $filecast->setPredefinedKeyValue("appkey", $this->appkey);
+            $filecast->setPredefinedKeyValue("appkey", $this->appKey);
             $filecast->setPredefinedKeyValue("timestamp", $this->timestamp);
 
             $filecast->setPredefinedKeyValue("alert", "IOS 鏂囦欢鎾祴璇�");
@@ -399,7 +432,7 @@ class UmengPush
 
             $groupcast = new IOSGroupcast();
             $groupcast->setAppMasterSecret($this->appMasterSecret);
-            $groupcast->setPredefinedKeyValue("appkey", $this->appkey);
+            $groupcast->setPredefinedKeyValue("appkey", $this->appKey);
             $groupcast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set the filter condition
             $groupcast->setPredefinedKeyValue("filter", $filter);
@@ -421,7 +454,7 @@ class UmengPush
         try {
             $customizedcast = new IOSCustomizedcast();
             $customizedcast->setAppMasterSecret($this->appMasterSecret);
-            $customizedcast->setPredefinedKeyValue("appkey", $this->appkey);
+            $customizedcast->setPredefinedKeyValue("appkey", $this->appKey);
             $customizedcast->setPredefinedKeyValue("timestamp", $this->timestamp);
 
             // Set your alias here, and use comma to split them if there are multiple alias.

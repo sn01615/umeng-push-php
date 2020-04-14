@@ -9,9 +9,11 @@ composer require sn01615/umeng-php
 ```
 
 customizedcast，通过alias进行推送, 对单个或者多个alias进行推送
+2020年4月14日：测试有效
 ```php
 $cc = (new UmengPush('***', '***'))
     ->setProductionMode(false)
+//    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendAndroidCustomizedcast([
             'ticker' => '1', // 必填 通知栏提示文字
             'title' => '2', // 必填 通知标题
@@ -23,47 +25,6 @@ $cc = (new UmengPush('***', '***'))
         ], 
         $alias = '12345', // 开发者填写自己的alias, 要求不超过500个alias, 多个alias以英文逗号间隔
         $aliasType = 'XXX');
-```
-
-
-单播(个人不推荐使用，因为token会变，推荐客户端给用户设置alias，使用alias+aliasType进行推送)
-
-```php
-use Umeng\UmengPush;
-
-$key = "****";
-$secret = "*****";
-$push = new UmengPush($key, $secret);
-$values = [
-    'ticker' => '1', // require 通知栏提示文字
-    'title' => '2', // require 通知标题
-    'text' => '3', // require 通知文字描述
-    'after_open' => 'go_app' // require 值可以为:
-    // "go_app": open app
-    // "go_url": 跳转到URL
-    // "go_activity": open activity
-    // "go_custom": 用户自定义内容。
-];
-echo $push->sendAndroidUnicast($values, [], 'device token');
-# result: {"ret":"SUCCESS","data":{"msg_id":"uu77312149835056871500"}}
-```
-广播
-```php
-$key = "****";
-$secret = "*****";
-$push = new UmengPush($key, $secret);
-$values = [
-    'ticker' => '1', // 必填 通知栏提示文字
-    'title' => '2', // 必填 通知标题
-    'text' => '3', // 必填 通知文字描述
-    'after_open' => 'go_app' // 必填 值可以为:
-    // "go_app": 打开应用
-    // "go_url": 跳转到URL
-    // "go_activity": 打开特定的activity
-    // "go_custom": 用户自定义内容。
-];
-echo $push->sendAndroidBroadcast($values, []);
-# result: {"ret":"SUCCESS","data":{"task_id":"us41183149835484509400"}}
 ```
 
 ##### README
