@@ -353,10 +353,21 @@ class UmengPush
 
     public function sendIOSUnicast(array $values, array $extra, $device_tokens)
     {
-        $_values = [
-            'alert' => '',
-        ];
-        $_values = array_merge($_values, $values);
+        $values = array_merge([
+            'alert' => '', // 必填
+            //  // 当content-available=1时(静默推送)，可选; 否则必填。
+            //  可为JSON类型和字符串类型
+            //  {
+            //       "title":"title",
+            //       "subtitle":"subtitle",
+            //       "body":"body"
+            //  },
+            'badge' => 0,
+            'sound' => 'chime',
+            'production_mode' => $this->getProductionMode(),// Set 'production_mode' to 'true' if your app is under production mode
+            'content-available' => 1,
+        ], $values);
+        $extra = array_merge([], $extra);
         try {
             $unicast = new IOSUnicast();
             $unicast->setAppMasterSecret($this->appMasterSecret);
@@ -364,14 +375,9 @@ class UmengPush
             $unicast->setPredefinedKeyValue("timestamp", $this->timestamp);
             // Set your device tokens here
             $unicast->setPredefinedKeyValue("device_tokens", $device_tokens);
-            foreach ($_values as $key => $value) {
+            foreach ($values as $key => $value) {
                 $unicast->setPredefinedKeyValue($key, $value);
             }
-            $unicast->setPredefinedKeyValue("badge", 0);
-            $unicast->setPredefinedKeyValue("sound", "chime");
-            // Set 'production_mode' to 'true' if your app is under production mode
-            $unicast->setPredefinedKeyValue("production_mode", $this->getProductionMode());
-            // Set customized fields
             foreach ($extra as $key => $value) {
                 $unicast->setCustomizedField($key, $value);
             }
