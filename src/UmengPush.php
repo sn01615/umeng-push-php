@@ -449,30 +449,45 @@ class UmengPush
         }
     }
 
-    function sendIOSCustomizedcast()
+    function sendIOSCustomizedcast(array $values, array $extra, $alias, $aliasType)
     {
+        $values = array_merge([
+            'alert' => '', // 必填
+            //  // 当content-available=1时(静默推送)，可选; 否则必填。
+            //  可为JSON类型和字符串类型
+            //  {
+            //       "title":"title",
+            //       "subtitle":"subtitle",
+            //       "body":"body"
+            //  },
+            'badge' => 0,
+            'sound' => 'chime',
+            'production_mode' => $this->getProductionMode(),// Set 'production_mode' to 'true' if your app is under production mode
+            'content-available' => 1,
+        ], $values);
+        $extra = array_merge([], $extra);
         try {
             $customizedcast = new IOSCustomizedcast();
             $customizedcast->setAppMasterSecret($this->appMasterSecret);
             $customizedcast->setPredefinedKeyValue("appkey", $this->appKey);
             $customizedcast->setPredefinedKeyValue("timestamp", $this->timestamp);
-
             // Set your alias here, and use comma to split them if there are multiple alias.
             // And if you have many alias, you can also upload a file containing these alias, then
             // use file_id to send customized notification.
-            $customizedcast->setPredefinedKeyValue("alias", "xx");
+            $customizedcast->setPredefinedKeyValue("alias", $alias);
             // Set your alias_type here
-            $customizedcast->setPredefinedKeyValue("alias_type", "xx");
-            $customizedcast->setPredefinedKeyValue("alert", "IOS 涓�у寲娴嬭瘯");
-            $customizedcast->setPredefinedKeyValue("badge", 0);
-            $customizedcast->setPredefinedKeyValue("sound", "chime");
-            // Set 'production_mode' to 'true' if your app is under production mode
-            $customizedcast->setPredefinedKeyValue("production_mode", "false");
-            print("Sending customizedcast notification, please wait...\r\n");
-            $customizedcast->send();
-            print("Sent SUCCESS\r\n");
+            $customizedcast->setPredefinedKeyValue("alias_type", $aliasType);
+            foreach ($values as $key => $value) {
+                $customizedcast->setPredefinedKeyValue($key, $value);
+            }
+            foreach ($extra as $key => $value) {
+                $customizedcast->setCustomizedField($key, $value);
+            }
+            // print("Sending customizedcast notification, please wait...\r\n");
+            return $customizedcast->send($this->getGetUrlAndBody());
+            // print("Sent SUCCESS\r\n");
         } catch (Exception $e) {
-            print("Caught exception: " . $e->getMessage());
+            return "Caught exception: " . $e->getMessage();
         }
     }
 }

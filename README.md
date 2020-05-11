@@ -9,11 +9,15 @@ composer require sn01615/umeng-php
 ```
 
 customizedcast，通过alias进行推送, 对单个或者多个alias进行推送
+
 2020年4月14日：测试有效
+
+2020年5月11日：iOS Customizedcast支持
 ```php
+# Android
 $cc = (new UmengPush('***', '***'))
     ->setProductionMode(false)
-//    ->setGetUrlAndBody(true) // 直接返回url和body
+    //    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendAndroidCustomizedcast([
             'ticker' => '1', // 必填 通知栏提示文字
             'title' => '2', // 必填 通知标题
@@ -25,6 +29,25 @@ $cc = (new UmengPush('***', '***'))
         ], 
         $alias = '12345', // 开发者填写自己的alias, 要求不超过500个alias, 多个alias以英文逗号间隔
         $aliasType = 'XXX');
+
+# iOS
+$cc = (new UmengPush('***', '***'))
+    ->setProductionMode(false)
+    //    ->setGetUrlAndBody(true) // 直接返回url和body
+    ->sendIOSCustomizedcast([
+        // 'alert' => '', // 可为JSON类型和字符串类型
+        'alert' => [
+            'title' => '1',
+            'subtitle' => '2',
+            'body' => '3',
+        ],
+    ], [
+        'aaa' => 1111, // 可选，用户自定义内容, "d","p"为友盟保留字段，
+                       // key不可以是"d","p"
+    ], $alias = '12345', // 开发者填写自己的alias, 要求不超过500个alias, 多个alias以英文逗号间隔
+    $aliasType = 'XXX');
+
+var_dump($cc);
 ```
 
 ##### README
