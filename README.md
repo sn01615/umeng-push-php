@@ -15,7 +15,7 @@ customizedcast，通过alias进行推送, 对单个或者多个alias进行推送
 2020年5月11日：iOS Customizedcast支持
 ```php
 # Android
-$cc = (new UmengPush('***', '***'))
+$cc = (new UmengPush('$key', '$secret'))
     // ->setProductionMode(false)
     //    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendAndroidCustomizedcast([
