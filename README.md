@@ -16,7 +16,7 @@ customizedcast，通过alias进行推送, 对单个或者多个alias进行推送
 ```php
 # Android
 $cc = (new UmengPush('***', '***'))
-    ->setProductionMode(false)
+    // ->setProductionMode(false)
     //    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendAndroidCustomizedcast([
             'ticker' => '1', // 必填 通知栏提示文字
@@ -32,7 +32,7 @@ $cc = (new UmengPush('***', '***'))
 
 # iOS
 $cc = (new UmengPush('***', '***'))
-    ->setProductionMode(false)
+    // ->setProductionMode(false)
     //    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendIOSCustomizedcast([
         // 'alert' => '', // 可为JSON类型和字符串类型
