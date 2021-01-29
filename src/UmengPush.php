@@ -39,7 +39,13 @@ class UmengPush
     {
         $this->appKey = $key;
         $this->appMasterSecret = $secret;
+        $this->updateTimestamp();
+    }
+
+    public function updateTimestamp()
+    {
         $this->timestamp = strval(time());
+        return $this;
     }
 
     function sendAndroidBroadcast(array $values, array $extra)
