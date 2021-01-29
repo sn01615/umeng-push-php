@@ -16,6 +16,7 @@ customizedcast，通过alias进行推送, 对单个或者多个alias进行推送
 ```php
 # Android
 $cc = (new UmengPush('$key', '$secret'))
+    // ->updateTimestamp() // 更新签名使用的时间
     // ->setProductionMode(false)
     //    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendAndroidCustomizedcast([
@@ -32,6 +33,7 @@ $cc = (new UmengPush('$key', '$secret'))
 
 # iOS
 $cc = (new UmengPush('***', '***'))
+    // ->updateTimestamp() // 更新签名使用的时间
     // ->setProductionMode(false)
     //    ->setGetUrlAndBody(true) // 直接返回url和body
     ->sendIOSCustomizedcast([
